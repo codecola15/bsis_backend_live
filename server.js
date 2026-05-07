@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const PORT = process.env.PORT || 8006;
+const cors = require('cors');
 // Declarition of all routes
 const userRoute = require('./routes/userRoute');
 const studentRoute = require('./routes/studentRoute');
@@ -9,6 +10,11 @@ const app = express();
 
 //Middleware
 app.use(express.json());
+// app.use(cors({
+//     origin: 'https://cruz-jerwin15-countries-v2-api.vercel.app/',
+// }));
+app.use(cors());
+
 
 //Routes
 app.use('/api/users',userRoute);
