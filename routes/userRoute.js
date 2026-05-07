@@ -10,7 +10,7 @@ const {
 } = require('../controllers/userController')
 
 router.get('/',getAllUsersController);
-router.post('/',addUserController);
+router.post('/create/',addUserController);
 router.get('/:id',getUserByIdController);
 router.put('/:id',updateUserController);
 router.delete('/:id',deleteUserController);
