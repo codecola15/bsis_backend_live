@@ -26,36 +26,34 @@ const getAllUsersController = async (req,res)=>{
 }
 
 // Controller for add new data
-const addUserController = async (req,res)=>{
-
+const addUserController = async (req, res) => {
     try {
-        const {firstname,lastname} = req.body;
-        if(!firstname || !lastname){
-            return res.status(400).json({
-                success:false,
-                message:"Firstname and lastname are required",
-                data:null
-            })
-        }
-        const data = await User.addUserModel({firstname,lastname});
-        res.status(201).json(
-            {
-                success:true,
-                message:"User added successfully",
-                data:data
-            }
-        );
-    } catch (error) {
-        console.error('Error fetching users:', error);
-        res.status(500).json(
-            {
-                success:false,
-                message:"Failed to add new user",
-                data:null
-            }
-        );
-    }
+        const { firstname, lastname } = req.body;
+        console.log('req.body:', req.body); // 👈 add this
 
+        if (!firstname || !lastname) {
+            return res.status(400).json({
+                success: false,
+                message: "Firstname and lastname are required",
+                data: null
+            });
+        }
+
+        const data = await User.addUserModel({ firstname, lastname });
+        res.status(201).json({
+            success: true,
+            message: "User added successfully",
+            data: data
+        });
+
+    } catch (error) {
+        console.error('Actual error:', error.message); // 👈 log real error
+        res.status(500).json({
+            success: false,
+            message: error.message, // 👈 return real error message temporarily
+            data: null
+        });
+    }
 }
 // Get single record by id
 const getUserByIdController = async (req,res)=>{
