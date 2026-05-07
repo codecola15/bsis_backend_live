@@ -9,18 +9,23 @@ class User{
     }
 
     //add new records
-    static async addUserModel(data){
-        const {firstname, lastname} = data;
-        const status = "ACTIVE";
-        // const firstname = data.firstname;
-        // const lastname = data.lastname;
-        const [results] = await pool.query(`INSERT INTO tbl_user (firstname,lastname,status)
-            values(?,?,?)`,[firstname,lastname,status]);
-        // const [results] = await pool.query(`INSERT INTO tbl_user (firstname,lastname)
-        //     values(${firstname},${lastname})`);
+   static async addUserModel(data){
+    const {firstname, lastname} = data;
+    const status = "ACTIVE";
+    
+    try {
+        console.log('Attempting insert with:', { firstname, lastname, status }); // 👈
+        const [results] = await pool.query(
+            `INSERT INTO tbl_user (firstname, lastname, status) VALUES (?, ?, ?)`,
+            [firstname, lastname, status]
+        );
+        console.log('Insert result:', results); // 👈
         return results.insertId;
-
+    } catch (error) {
+        console.error('Insert error:', error.message); // 👈
+        throw error;
     }
+}
     // get single records
     static async getUserByIdModel(id){
          const [results] = await pool.query(`SELECT * FROM tbl_user WHERE id = ?`,[id]);
